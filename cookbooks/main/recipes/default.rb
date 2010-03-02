@@ -4,6 +4,9 @@ execute "testing" do
   }
 end
 
+require_recipe "generate_widget"
+require_recipe "delayed_job"
+
 # uncomment if you want to run couchdb recipe
 # require_recipe "couchdb"
 
