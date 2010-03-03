@@ -7,9 +7,8 @@
 if ['solo', 'app', 'app_master'].include?(node[:instance_role])
 
   # be sure to replace "app_name" with the name of your application.
-  run_for_app("polltracker") do |app_name, data|
-  
-    worker_name = "delayed_job"
+  run_for_app("polltracker") do |app_name, data| 
+    worker_name = "#{app_name}_delayed_job"
     
     # The symlink is created in /data/app_name/current/tmp/pids -> /data/app_name/shared/pids, but shared/pids doesn't seem to be?
     directory "/data/#{app_name}/shared/pids" do
