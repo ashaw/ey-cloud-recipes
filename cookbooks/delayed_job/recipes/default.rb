@@ -2,8 +2,7 @@
 # Cookbook Name:: delayed_job
 # Recipe:: default
 #
-
-#https://gist.github.com/272257/637c9252b137dee44da8c365d640d5c53f194217
+# http://gist.github.com/raw/189423/d22be723cc0c6ff328ef368410d04ae005bea4a5/default.rb
 
 if ['solo', 'app', 'app_master'].include?(node[:instance_role])
 
@@ -36,7 +35,7 @@ if ['solo', 'app', 'app_master'].include?(node[:instance_role])
     
     bash "monit-reload-restart" do
        user "root"
-       code "monit reload && monit"
+       code "pkill -9 monit && monit"
     end
       
   end
