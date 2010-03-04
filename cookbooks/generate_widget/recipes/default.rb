@@ -3,4 +3,4 @@
 # Recipe:: default
 #
 
-`rake polltracker:widget RAILS_ENV=production`
+`cd /data/polltracker/current && rake polltracker:widget RAILS_ENV=production`
