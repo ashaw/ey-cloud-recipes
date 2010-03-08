@@ -33,10 +33,10 @@ if ['solo', 'app', 'app_master'].include?(node[:instance_role])
     end
     
     bash "monit-reload-restart" do
-       user "deploy"
-       code "sudo monit stop #{worker_name}"
+       user "root"
+       code "monit stop #{worker_name}" #to make sure children aren't spawned
        sleep 5
-       code "sudo monit start #{worker_name}"
+       code "pkill -9 monit && monit"
     end
       
   end
