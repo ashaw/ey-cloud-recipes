@@ -12,7 +12,7 @@ if ['solo', 'app', 'app_master'].include?(node[:instance_role])
     
     bash "generate_widget" do
        user "deploy"
-       code "cd /data/#{app_name}/current && rake polltracker:widget RAILS_ENV=#{env}"
+       code "cd /data/#{app_name}/current && rake polltracker:widget RAILS_ENV=#{env} && rake polltracker:sitemap RAILS_ENV=#{env}"
     end
       
   end
