@@ -22,9 +22,9 @@ sub vcl_fetch {
   # Rails apps often come out of the box being cache-unfriendly. This is an easy
   # workaround that forces them to be cached anyway. The right answer is to fix the
   # app, though.
-	if (obj.ttl < 10s) {
-	 set obj.ttl = 10s;
-	}
+        if (obj.ttl < 10s) {
+         set obj.ttl = 10s;
+        }
 } 
 
 sub vcl_deliver {
