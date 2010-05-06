@@ -7,6 +7,10 @@ backend default {
 
 sub vcl_recv {
   set req.grace = 120s; 
+
+  if (req.url ~ "^/(application/dyn.js|login|signup|logout|.*/edit/|.*/delete/)") {
+    return (pass);
+  }
 } 
   
 sub vcl_fetch {
