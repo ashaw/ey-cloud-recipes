@@ -113,7 +113,7 @@ end
 
 execute "Edit the config files inline to change nginx from listening on port 80 to listening on port 81" do
   command %Q{
-    perl -p -i -e's{listen 80;}{listen 81;}' /etc/nginx/servers/*.conf
+    bash -c 'for k in `grep -l "listen 80;" /etc/nginx/servers/*.conf`; do perl -p -i -e"s{listen 80;}{listen 81;}" $k; mv $k "/etc/nginx/servers/keep.`basename $k`"; done'
   }
 end
 
@@ -127,14 +127,8 @@ end
 
 # Start/restart varnish
 
-execute "Reload monit" do
+execute "Stop Varnish and bounce monit" do
   command %Q{
-    monit reload
-  }
-end
-
-execute "Start varnish" do
-  command %Q{
-    monit restart varnish_80
+    monit quit
   }
 end
