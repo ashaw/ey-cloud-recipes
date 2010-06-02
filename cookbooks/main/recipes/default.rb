@@ -45,7 +45,19 @@ require_recipe "varnish"
 #uncomment to run the exim::auth recipe
 #require_recipe "exim::auth"
 
+#uncomment to run the resque recipe
+#require_recipe "resque"
+
 #uncomment to use the ntp recipes for fixing clock issues
 #require_recipe "ntp"
 #
 #require_recipe "logrotate"
+#
+#uncomment to use the solr recipe
+#require_recipe "solr"
+
+#uncomment to include the emacs recipe
+#require_recipe "emacs"
+
+#uncomment to include the eybackup_verbose recipe
+#require_recipe "eybackup_verbose"
