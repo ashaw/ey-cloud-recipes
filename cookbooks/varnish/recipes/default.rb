@@ -129,7 +129,7 @@ if ['solo','app_master'].include?(node[:instance_role])
 
     execute "Restarting haproxy" do
       command %Q{
-        /etc/init.d/haproxy restart
+        /etc/init.d/haproxy reload
       }
     end
   else
