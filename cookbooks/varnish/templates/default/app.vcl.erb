@@ -6,7 +6,7 @@ backend default {
 } 
 
 sub vcl_recv {
-  set req.grace = 120s; 
+  set req.grace = 300s; 
 
   if (req.url ~ "^/(application/dyn.js|login|signup|logout|.*/edit/|.*/delete/)") {
     return (pass);
@@ -16,14 +16,14 @@ sub vcl_recv {
 sub vcl_fetch {
   # If a thread is fetching this object, set the grace period on it to
   # 120 seconds so that stale content can be served from cache for that period.
-  set obj.grace = 120s;
+  set obj.grace = 300s;
   
   # If the normal TTL on the content is less than 10 seconds, set it to 10 seconds.
   # Rails apps often come out of the box being cache-unfriendly. This is an easy
   # workaround that forces them to be cached anyway. The right answer is to fix the
   # app, though.
-        if (obj.ttl < 10s) {
-         set obj.ttl = 10s;
+        if (obj.ttl < 120s) {
+         set obj.ttl = 120s;
         }
 } 
 
