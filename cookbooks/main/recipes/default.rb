@@ -7,9 +7,9 @@
 # uncomment if you want to run postgres recipe
 #require_recipe 'postgres'
 
+require_recipe "varnish"
 require_recipe "generate_widget"
 require_recipe "delayed_job"
-require_recipe "varnish"
 
 
 # uncomment if you want to run couchdb recipe
