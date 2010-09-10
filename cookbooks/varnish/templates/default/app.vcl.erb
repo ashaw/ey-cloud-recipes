@@ -22,7 +22,7 @@ sub vcl_recv {
   }
 
 
-  if (req.url ~ "^/(application/dyn.js|login|signup|logout|.*/edit/|.*/delete/|.*/new|.*/users|.*/csvs)") || (req.request != "GET") {
+  if ((req.url ~ "^/(application/dyn.js|login|signup|logout|.*/edit/|.*/delete/|.*/new|.*/users|.*csvs)") || (req.request == "POST")) {
     # Do not ever look in the cache for any of this stuff.
     return (pass);
   } else {
@@ -45,7 +45,7 @@ sub vcl_fetch {
   }
 
   # Remove cookies. If there are requests that have to be able to pass cookies on, and/or cache based on cookies (private caches per user), then this and the code in vcl_recv will have to be adjusted.
-  if (req.url ~ "^/(application/dyn.js|login|signup|logout|.*/edit/|.*/delete/|.*/new|.*/users|.*/csvs)") || (req.request != "GET") {
+  if ((req.url ~ "^/(application/dyn.js|login|signup|logout|.*/edit/|.*/delete/|.*/new|.*/users|.*csvs)") || (req.request == "POST")) {
     # No-oping here at the moment. The assumption is that since this stuff here is never to be cached, it will be excluded from any other cookie manipulation, too.
   } else {
     # The Cookie Monster eats the cookies.
