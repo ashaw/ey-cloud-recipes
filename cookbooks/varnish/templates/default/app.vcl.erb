@@ -2,16 +2,34 @@
 
 backend default {
    .host = "127.0.0.1";
-   .port = "81"; 
-} 
+   .port = "81";
+}
 
 sub vcl_recv {
-  set req.grace = 500s; 
+  # Set the grace period for delivering old content.
+  set req.grace = 500s;
+
+  # Normalize the Accept-Encoding header, since this can be formatted multiple ways, and that can result in multiple identical copies of things in the cache.
+
+  if (req.http.Accept-Encoding) {
+    if (req.http.Accept-Encoding ~ "gzip") {
+      set req.http.Accept-Encoding = "gzip";
+    } elsif (req.http.Accept-Encoding ~ "deflate") {
+      set req.http.Accept-Encoding = "deflate";
+    } else {
+      remove req.http.Accept-Encoding;
+    }
+  }
+
 
   if (req.url ~ "^/(application/dyn.js|login|signup|logout|.*/edit/|.*/delete/)") {
+    # Do not ever look in the cache for any of this stuff.
     return (pass);
+  } else {
+    # Get rid of cookies so that a normal cache lookup can be done.
+    unset req.http.cookie;
   }
-} 
+}
   
 sub vcl_fetch {
   # If a thread is fetching this object, set the grace period on it to
@@ -22,10 +40,18 @@ sub vcl_fetch {
   # Rails apps often come out of the box being cache-unfriendly. This is an easy
   # workaround that forces them to be cached anyway. The right answer is to fix the
   # app, though.
-        if (obj.ttl < 300s) {
-         set obj.ttl = 300s;
-        }
-} 
+  if (obj.ttl < 300s) {
+    set obj.ttl = 300s;
+  }
+
+  # Remove cookies. If there are requests that have to be able to pass cookies on, and/or cache based on cookies (private caches per user), then this and the code in vcl_recv will have to be adjusted.
+  if (req.url ~ "^/(application/dyn.js|login|signup|logout|.*/edit/|.*/delete/)") {
+    # No-oping here at the moment. The assumption is that since this stuff here is never to be cached, it will be excluded from any other cookie manipulation, too.
+  } else {
+    # The Cookie Monster eats the cookies.
+    unset obj.http.set-cookie;
+  }
+}
 
 sub vcl_deliver {
   # This just inserts a diagnostic header to let us know if the content
