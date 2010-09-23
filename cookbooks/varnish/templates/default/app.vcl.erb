@@ -22,7 +22,7 @@ sub vcl_recv {
   }
 
 
-  if ((req.url ~ "^/(application/dyn.js|login|signup|logout|.*/edit/|.*/delete/|.*/new|.*/users|.*csvs)") || (req.request == "POST")) {
+  if ((req.url ~ "^/(application/dyn.js|login|signup|logout|users|application/tripwire|csvs|profile|.*/edit/|.*/delete/|.*/new)") || (req.request == "POST")) {
     # Do not ever look in the cache for any of this stuff.
     return (pass);
   } else {
