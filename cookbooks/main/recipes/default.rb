@@ -40,6 +40,12 @@ require_recipe "delayed_job"
 # require_recipe "sunspot"
 #
 #uncomment to run the exim recipe
+#exim_auth "auth" do
+#  my_hostname "my_hostname.com"
+#  smtp_host "smtp.sendgrid.com"
+#  username "username"
+#  password "password"
+#end
 #require_recipe "exim"
 
 #uncomment to run the exim::auth recipe
@@ -48,9 +54,9 @@ require_recipe "delayed_job"
 #uncomment to run the resque recipe
 #require_recipe "resque"
 
-#uncomment to use the ntp recipes for fixing clock issues
-#require_recipe "ntp"
-#
+#uncomment to run the redis recipe
+#require_recipe "redis"
+
 #require_recipe "logrotate"
 #
 #uncomment to use the solr recipe
@@ -61,3 +67,5 @@ require_recipe "delayed_job"
 
 #uncomment to include the eybackup_verbose recipe
 #require_recipe "eybackup_verbose"
+
+require_recipe 'nginx'
