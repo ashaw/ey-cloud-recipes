@@ -5,7 +5,7 @@
 
 require 'etc'
 
-if ['solo','app_master'].include?(node[:instance_role])
+if ['solo','app_master', 'app'].include?(node[:instance_role])
 
   # This needs to be in keywords: www-servers/varnish ~x86
   # This makes sure that it is.
