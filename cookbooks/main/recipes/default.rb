@@ -68,4 +68,4 @@ require_recipe "delayed_job"
 #uncomment to include the eybackup_verbose recipe
 #require_recipe "eybackup_verbose"
 
-require_recipe 'nginx'
+#require_recipe 'nginx'
